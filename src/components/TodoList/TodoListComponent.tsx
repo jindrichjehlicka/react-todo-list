@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { TodoItem } from "model/TodoItem";
-import { getTodoItems } from "service/todoListService";
 import CreateTodoItemComponent from "components/CreateTodoItem/CreateTodoItemComponent";
 import { v4 as uuid } from 'uuid';
 import { paginate } from "helper/paginate";
@@ -9,8 +8,13 @@ import TodoItems from "components/TodoItems/TodoItems";
 import useDocumentTitle from "hook/use-document-title";
 import { PAGE } from "const/page";
 import { ModalContext } from "context/modal-context";
+import { TodoService } from "service/TodoListService";
 
-const TodoListComponent: React.FC = () => {
+interface ITodoList {
+    isMocked?: boolean;
+}
+
+const TodoListComponent: React.FC<ITodoList> = ({isMocked = true}) => {
     const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
 
     const [unfinishedTodoItems, setUnfinishedTodoItems] = useState<TodoItem[]>([]);
@@ -24,7 +28,7 @@ const TodoListComponent: React.FC = () => {
 
 
     useEffect(() => {
-        setTodoItems(getTodoItems);
+        setTodoItems(TodoService.getAll(isMocked));
     }, []);
 
     useEffect(() => {
@@ -43,13 +47,12 @@ const TodoListComponent: React.FC = () => {
             handleModal({
                 title: `Delete task ${itemToDelete.text}`,
                 message: <div>Are you sure you want to delete <strong>{itemToDelete.text}</strong>?</div>,
-                context: 'test context',
                 onCancel: cancelDelete,
                 onBackdropClick: cancelDelete,
                 onConfirm: confirmDelete
             });
         }
-    }, [itemToDelete])
+    }, [itemToDelete]);
     //custom hook to dynamically set document title
     useDocumentTitle(title);
 
@@ -66,7 +69,7 @@ const TodoListComponent: React.FC = () => {
     };
 
     const handleDeleteItem = (todoItem: TodoItem) => {
-        setItemToDelete(todoItem);
+        setItemToDelete(() => todoItem);
     };
 
     const handleFinishItem = (todoItem: TodoItem) => {
@@ -95,7 +98,7 @@ const TodoListComponent: React.FC = () => {
     const {handleModal} = React.useContext(ModalContext);
 
 
-    return <>
+    return <div className="container">
         <div className="row mt-3">
             <div className="col-lg-8 offset-2">
                 <CreateTodoItemComponent
@@ -134,8 +137,7 @@ const TodoListComponent: React.FC = () => {
                 />
             </div>
         </div>}
-
-    </>;
+    </div>;
 };
 
 

@@ -1,7 +1,6 @@
 import React from "react";
 
 export interface IModalProps {
-    context: string,
     title: string,
     message: string | JSX.Element;
     onConfirm: () => void;
@@ -9,9 +8,8 @@ export interface IModalProps {
     onBackdropClick: () => void;
 }
 
-// move
+//todo: move
 const initialState: IModalProps = {
-    context: '',
     title: '',
     message: '',
     onConfirm: () => {

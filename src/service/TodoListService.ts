@@ -1,6 +1,6 @@
 import { TodoItem } from "model/TodoItem";
 
-const defaultListItems: TodoItem[] = [
+const _defaultListItems: TodoItem[] = [
     {
         id: 1,
         text: 'Walk the Dog',
@@ -24,10 +24,17 @@ const defaultListItems: TodoItem[] = [
         createdAt: '18/11/2020',
         finished: true
     },
-
 ];
 
-export function getTodoItems(): TodoItem[] {
-    //todo get from local storage
-    return defaultListItems;
-}
+
+
+export const TodoService = {
+
+    getAll: (isMocked: boolean): TodoItem[] => {
+        if (isMocked) return _defaultListItems;
+
+        return [];
+    }
+};
+
+
