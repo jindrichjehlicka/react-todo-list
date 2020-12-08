@@ -24,7 +24,6 @@ const HttpWrapper = {
         args: RequestInit = {method: "put", body: JSON.stringify(body)}
     ) : Promise<HttpResponse<T>> => await http<T>(new Request(path, args)),
 
-    // todo: add delete
 };
 
 async function http<T>(
