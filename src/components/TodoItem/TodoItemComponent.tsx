@@ -8,16 +8,16 @@ interface ITodoItem {
     item: TodoItem;
 }
 
-const TodoItemComponent = ({item}: ITodoItem) => {
+const TodoItemComponent: React.FC<ITodoItem> = ({item}: ITodoItem) => {
     const itemClasses = `${styles.TodoItemComponent} list-group-item d-flex justify-content-between ${item.finished ? 'bg-light' : ''}`;
     const checkClasses = `mr-4 pointer ${item.finished ? 'text-success' : 'text-muted'}`;
     const deleteClasses = `pointer text-danger`;
-    const todoContext= useContext(TodoActionsContext);
+    const todoContext = useContext(TodoActionsContext);
     return <div
         key={item.id}
         className={itemClasses}
     >
-        <div>{item.text}</div>
+        <div>{item.finished ? <s>{item.text}</s> : item.text} </div>
         <div>
             <FontAwesome
                 name={'check'}
@@ -33,17 +33,6 @@ const TodoItemComponent = ({item}: ITodoItem) => {
     </div>;
 };
 
-export default TodoItemComponent;
+export default React.memo(TodoItemComponent);
 
 
-//EXAMPLE OF React.FC
-// const TodoItemComponent: React.FC<{ item: TodoItem }> = ({children, item}) => {
-//     const classes = styles.TodoItem.concat(' list-group-item');
-//
-//     return  <li
-//          key={item.id}
-//          className={classes}
-//      >
-//          {item.text}
-//      </li>;
-// };

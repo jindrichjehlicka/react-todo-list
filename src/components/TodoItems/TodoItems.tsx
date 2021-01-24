@@ -17,4 +17,4 @@ const TodoItems: React.FC<ITodoItems> = ({paginated}: ITodoItems) => (
     </ul>
 );
 
-export default TodoItems;
+export default  TodoItems;

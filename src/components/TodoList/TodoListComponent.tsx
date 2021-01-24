@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 import { TodoItem } from "model/TodoItem";
 import CreateTodoItemComponent from "components/CreateTodoItem/CreateTodoItemComponent";
 import { v4 as uuid } from 'uuid';
@@ -13,7 +13,7 @@ import { TodoService } from "service/TodoListService";
 interface ITodoList {
     isMocked?: boolean;
 }
-
+// TODO: useMemo and useCallback!!
 const TodoListComponent: React.FC<ITodoList> = ({isMocked = true}) => {
     const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
 
@@ -26,10 +26,9 @@ const TodoListComponent: React.FC<ITodoList> = ({isMocked = true}) => {
     const [itemToDelete, setItemToDelete] = useState<TodoItem | null>(null);
     const title = `(${unfinishedTodoItems.length}) Unfinished Tasks`;
 
-
     useEffect(() => {
         setTodoItems(TodoService.getAll(isMocked));
-    }, []);
+    },[]);
 
     useEffect(() => {
         setUnfinishedTodoItems(todoItems.filter(p => !p.finished));
@@ -68,6 +67,7 @@ const TodoListComponent: React.FC<ITodoList> = ({isMocked = true}) => {
         setTodoItems(updatedItems);
     };
 
+
     const handleDeleteItem = (todoItem: TodoItem) => {
         setItemToDelete(() => todoItem);
     };
@@ -96,7 +96,6 @@ const TodoListComponent: React.FC<ITodoList> = ({isMocked = true}) => {
     };
 
     const {handleModal} = React.useContext(ModalContext);
-
 
     return <div className="container">
         <div className="row mt-3">
@@ -137,7 +136,7 @@ const TodoListComponent: React.FC<ITodoList> = ({isMocked = true}) => {
                 />
             </div>
         </div>}
-    </div>;
+    </div>
 };
 
 

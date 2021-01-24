@@ -8,13 +8,14 @@ const ApiDemo: React.FC = () => {
     const [posts, setPosts] = useState<Post[]>([]);
 
     useEffect(() => {
-        PostService.getAll().then((response: Post[]) => {
+        PostService.getAll().then((response) => {
             setPosts(response);
         });
 
     }, []);
 
     return <div className={styles.ApiDemo}>
+
     </div>;
 };
 

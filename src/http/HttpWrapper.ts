@@ -9,20 +9,20 @@ const HttpWrapper = {
         args: RequestInit = {method: "get"}
     ): Promise<HttpResponse<T>> => {
         const pathWithParams = `${path}?${new URLSearchParams(params)}`;
-       return await http<T>(new Request(pathWithParams, args));
+        return await http<T>(new Request(pathWithParams, args));
     },
 
     post: async <T>(
         path: string,
         body: any,
         args: RequestInit = {method: "post", body: JSON.stringify(body)}
-    ): Promise<HttpResponse<T>>  => await http<T>(new Request(path, args)),
+    ): Promise<HttpResponse<T>> => await http<T>(new Request(path, args)),
 
     put: async <T>(
         path: string,
         body: any,
         args: RequestInit = {method: "put", body: JSON.stringify(body)}
-    ) : Promise<HttpResponse<T>> => await http<T>(new Request(path, args)),
+    ): Promise<HttpResponse<T>> => await http<T>(new Request(path, args)),
 
 };
 
